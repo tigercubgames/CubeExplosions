@@ -5,10 +5,16 @@ using UnityEngine;
 
 public class ClickHandler : MonoBehaviour
 {
-    public event Action Clicked;
+    [SerializeField] private ClickDetector _clickDetector;
+    [SerializeField] private CursorRaycaster _cursorRaycaster;
     
-    private void OnMouseUpAsButton()
+    private void OnEnable()
     {
-        Clicked?.Invoke();
+        _clickDetector.Clicked += _cursorRaycaster.Cast;
+    }
+
+    private void OnDisable()
+    {
+        _clickDetector.Clicked -= _cursorRaycaster.Cast;
     }
 }

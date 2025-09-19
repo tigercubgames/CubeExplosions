@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class Exploder : MonoBehaviour
 {
-    [SerializeField] private Spawner _spawner;
-    [SerializeField] private int _force = 450;
-    [SerializeField] private int _radius = 4;
-    
-    public void BlowUp()
-    {
-        List<GameObject> targetList = _spawner.GetSpawnedObjects();
+    [SerializeField] private float _force = 200f;
+    [SerializeField] private float _radius = 2f;
 
-        if (targetList.Count == 0)
-            return;
-        
-        foreach (var target in targetList)
+    public void BlowUp(Vector3 position, List<Cube> cubes)
+    {
+        foreach (Cube cube in cubes)
         {
-            target.GetComponent<Rigidbody>().AddExplosionForce(_force, transform.position, _radius);
+            Rigidbody rigidbody = cube.GetRigidbody();
+            rigidbody.AddExplosionForce(_force, position, _radius);
         }
     }
 }
